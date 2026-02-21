@@ -5,893 +5,651 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chandra Sekhar Gidijala — Data Science Leader</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --ink: #0a0a0f;
-    --paper: #f5f0e8;
-    --cream: #ede8dc;
-    --gold: #c8a96e;
-    --gold-light: #e8c98a;
-    --teal: #1a6b72;
-    --teal-light: #2a8b94;
-    --muted: #6b6560;
-    --border: rgba(10,10,15,0.12);
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    overflow-x: hidden;
-  }
-
-  /* ── NOISE TEXTURE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: 999;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 4rem;
-    backdrop-filter: blur(12px);
-    background: rgba(245,240,232,0.85);
-    border-bottom: 1px solid var(--border);
-    animation: fadeDown 0.8s ease both;
-  }
-
-  .nav-logo {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--ink);
-    opacity: 0.6;
-    transition: opacity 0.2s;
-  }
-  .nav-links a:hover { opacity: 1; }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 8rem 4rem 4rem;
-    gap: 4rem;
-    position: relative;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    top: 0; right: 0;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(135deg, var(--teal) 0%, #0d3d42 100%);
-    z-index: 0;
-    clip-path: polygon(8% 0, 100% 0, 100% 100%, 0% 100%);
-  }
-
-  .hero-text {
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.3s ease both;
-  }
-
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 5vw, 5.5rem);
-    font-weight: 900;
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.5s ease both;
-  }
-
-  .hero h1 em {
-    font-style: italic;
-    color: var(--teal);
-  }
-
-  .hero-desc {
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: var(--muted);
-    max-width: 420px;
-    font-weight: 300;
-    margin-bottom: 2.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.7s ease both;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.9s ease both;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.85rem 2rem;
-    background: var(--ink);
-    color: var(--paper);
-    text-decoration: none;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    border: 2px solid var(--ink);
-    transition: background 0.25s, color 0.25s, transform 0.2s;
-  }
-  .btn-primary:hover { background: transparent; color: var(--ink); transform: translateY(-2px); }
-
-  .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.85rem 2rem;
-    background: transparent;
-    color: var(--teal);
-    text-decoration: none;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    border: 2px solid var(--teal);
-    transition: background 0.25s, color 0.25s, transform 0.2s;
-  }
-  .btn-outline:hover { background: var(--teal); color: white; transform: translateY(-2px); }
-
-  /* ── HERO VISUAL SIDE ── */
-  .hero-visual {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    padding: 3rem 2rem;
-    opacity: 0;
-    animation: fadeIn 1s 0.6s ease both;
-  }
-
-  .avatar-ring {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    border: 3px solid var(--gold);
-    padding: 5px;
-    position: relative;
-  }
-
-  .avatar-inner {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold-light), var(--gold));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 4rem;
-    font-weight: 900;
-    color: var(--ink);
-  }
-
-  .hero-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    width: 100%;
-    max-width: 320px;
-  }
-
-  .stat-card {
-    background: rgba(245,240,232,0.12);
-    border: 1px solid rgba(245,240,232,0.2);
-    border-radius: 4px;
-    padding: 1.25rem;
-    text-align: center;
-  }
-
-  .stat-number {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.2rem;
-    font-weight: 900;
-    color: var(--gold-light);
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(245,240,232,0.55);
-    margin-top: 0.4rem;
-  }
-
-  /* ── SECTION BASE ── */
-  section {
-    padding: 6rem 4rem;
-  }
-
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.75rem;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 3.5vw, 3.2rem);
-    font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 3rem;
-  }
-
-  /* ── EXPERTISE ── */
-  .expertise {
-    background: var(--cream);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .expertise-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-  }
-
-  .expertise-card {
-    background: var(--paper);
-    padding: 2.5rem;
-    border: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s;
-  }
-
-  .expertise-card:hover { transform: translateY(-4px); }
-
-  .expertise-card::before {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, var(--teal), var(--gold));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.35s ease;
-  }
-  .expertise-card:hover::before { transform: scaleX(1); }
-
-  .expertise-icon {
-    font-size: 2rem;
-    margin-bottom: 1.2rem;
-  }
-
-  .expertise-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.35rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-  }
-
-  .expertise-card p {
-    font-size: 0.9rem;
-    line-height: 1.65;
-    color: var(--muted);
-    font-weight: 300;
-  }
-
-  /* ── EXPERIENCE ── */
-  .timeline {
-    max-width: 760px;
-    margin: 0 auto;
-    position: relative;
-  }
-
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: linear-gradient(to bottom, var(--teal), var(--gold), transparent);
-  }
-
-  .timeline-item {
-    padding: 0 0 3rem 3rem;
-    position: relative;
-  }
-
-  .timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -4px;
-    top: 6px;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--gold);
-    box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--gold);
-  }
-
-  .timeline-date {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.2em;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-  }
-
-  .timeline-role {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 0.3rem;
-  }
-
-  .timeline-company {
-    font-size: 0.9rem;
-    color: var(--teal);
-    font-weight: 500;
-    margin-bottom: 0.75rem;
-    letter-spacing: 0.03em;
-  }
-
-  .timeline-desc {
-    font-size: 0.88rem;
-    line-height: 1.7;
-    color: var(--muted);
-    font-weight: 300;
-    max-width: 520px;
-  }
-
-  /* ── SKILLS ── */
-  .skills-section {
-    background: var(--ink);
-    color: var(--paper);
-  }
-
-  .skills-section .section-title { color: var(--paper); }
-
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    margin-top: 1rem;
-  }
-
-  .skill-group h4 {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1rem;
-    padding-bottom: 0.6rem;
-    border-bottom: 1px solid rgba(200,169,110,0.3);
-  }
-
-  .skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .skill-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    padding: 0.35rem 0.75rem;
-    border: 1px solid rgba(245,240,232,0.15);
-    border-radius: 2px;
-    color: rgba(245,240,232,0.7);
-    letter-spacing: 0.05em;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .skill-tag:hover { border-color: var(--gold); color: var(--gold-light); }
-
-  /* ── EDUCATION ── */
-  .education-card {
-    display: flex;
-    gap: 3rem;
-    align-items: flex-start;
-    padding: 2.5rem;
-    border: 1px solid var(--border);
-    background: var(--cream);
-    max-width: 700px;
-  }
-
-  .edu-badge {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: var(--teal);
-    min-width: 70px;
-    line-height: 1;
-  }
-
-  .edu-details h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 0.3rem;
-  }
-
-  .edu-details .institute {
-    color: var(--teal);
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  }
-
-  .edu-details p {
-    font-size: 0.85rem;
-    color: var(--muted);
-    line-height: 1.6;
-    font-weight: 300;
-  }
-
-  /* ── CONTACT ── */
-  .contact-section {
-    background: linear-gradient(135deg, var(--teal) 0%, #0d3d42 100%);
-    color: var(--paper);
-    text-align: center;
-    padding: 7rem 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .contact-section::before {
-    content: 'CS';
-    position: absolute;
-    font-family: 'Playfair Display', serif;
-    font-size: 30vw;
-    font-weight: 900;
-    color: rgba(255,255,255,0.03);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .contact-section .section-label { color: var(--gold-light); }
-
-  .contact-section .section-title {
-    color: var(--paper);
-    margin-bottom: 1rem;
-  }
-
-  .contact-tagline {
-    font-size: 1.05rem;
-    color: rgba(245,240,232,0.65);
-    font-weight: 300;
-    margin-bottom: 3rem;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.7;
-  }
-
-  .contact-links {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 1;
-  }
-
-  .contact-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.9rem 2.2rem;
-    border: 1.5px solid rgba(245,240,232,0.4);
-    color: var(--paper);
-    text-decoration: none;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    transition: background 0.25s, border-color 0.25s, transform 0.2s;
-    border-radius: 2px;
-  }
-  .contact-link:hover { background: rgba(245,240,232,0.1); border-color: var(--gold-light); transform: translateY(-2px); }
-  .contact-link.gold { background: var(--gold); color: var(--ink); border-color: var(--gold); font-weight: 500; }
-  .contact-link.gold:hover { background: var(--gold-light); }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--ink);
-    color: rgba(245,240,232,0.4);
-    text-align: center;
-    padding: 2rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
-
-  /* ── SCROLLING MARQUEE ── */
-  .marquee-wrap {
-    overflow: hidden;
-    background: var(--gold);
-    padding: 0.8rem 0;
-    border-top: 1px solid rgba(0,0,0,0.1);
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-  }
-
-  .marquee-track {
-    display: flex;
-    gap: 3rem;
-    white-space: nowrap;
-    animation: marquee 20s linear infinite;
-  }
-
-  .marquee-item {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink);
-    flex-shrink: 0;
-  }
-
-  .marquee-dot {
-    display: inline-block;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--ink);
-    opacity: 0.4;
-    margin-left: 3rem;
-    vertical-align: middle;
-  }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  /* ── SCROLL REVEAL ── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    nav { padding: 1.2rem 2rem; }
-    .nav-links { display: none; }
-    .hero { grid-template-columns: 1fr; padding: 7rem 2rem 4rem; }
-    .hero::after { display: none; }
-    .hero-visual { background: var(--teal); border-radius: 8px; }
-    section { padding: 4rem 2rem; }
-    .expertise-grid { grid-template-columns: 1fr; }
-    .skills-grid { grid-template-columns: 1fr 1fr; }
-  }
-
-  @media (max-width: 600px) {
-    .hero h1 { font-size: 2.4rem; }
-    .skills-grid { grid-template-columns: 1fr; }
-    .education-card { flex-direction: column; gap: 1.5rem; }
-  }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #080c14;
+  --surface: #0d1320;
+  --surface2: #111827;
+  --border: rgba(255,255,255,0.06);
+  --border-bright: rgba(255,255,255,0.12);
+  --text: #e8eaf0;
+  --muted: #6b7a99;
+  --accent: #4f9cf0;
+  --accent2: #7c6af0;
+  --green: #2dd4a0;
+  --gold: #f0b94f;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  cursor: none;
+}
+.cursor {
+  width: 10px; height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  top: 0; left: 0;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  box-shadow: 0 0 10px rgba(79,156,240,0.8);
+  transition: width 0.2s, height 0.2s, background 0.2s;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1.5px solid rgba(79,156,240,0.7);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  top: 0; left: 0;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
+}
+.cursor.hovered { width: 16px; height: 16px; background: white; }
+.cursor-ring.hovered { width: 52px; height: 52px; border-color: rgba(79,156,240,1); }
+.cursor { opacity: 0; }
+.cursor-ring { opacity: 0; }
+.cursor.active { opacity: 1; }
+.cursor-ring.active { opacity: 1; }
+* { cursor: none !important; }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(79,156,240,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,156,240,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.4rem 3rem;
+  background: rgba(8,12,20,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  animation: slideDown 0.7s ease both;
+}
+.nav-logo {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+.nav-links a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta { padding: 0.5rem 1.3rem; border: 1px solid var(--accent); color: var(--accent) !important; border-radius: 2px; transition: background 0.2s !important; }
+.nav-cta:hover { background: rgba(79,156,240,0.1) !important; }
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 9rem 3rem 5rem;
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 2rem;
+  opacity: 0; animation: fadeUp 0.8s 0.2s ease both;
+}
+.eyebrow-dot {
+  width: 6px; height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--green);
+  animation: pulse 2s ease-in-out infinite;
+}
+.eyebrow-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--green);
+}
+@keyframes pulse {
+  0%,100%{opacity:1;box-shadow:0 0 10px var(--green);}
+  50%{opacity:.5;box-shadow:0 0 4px var(--green);}
+}
+.hero h1 {
+  font-size: clamp(3.5rem,7vw,7rem);
+  font-weight: 800; line-height: 0.95;
+  letter-spacing: -0.03em; margin-bottom: 1rem;
+  opacity: 0; animation: fadeUp 0.8s 0.4s ease both;
+}
+.hero h1 .serif {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic; font-weight: 400;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-sub {
+  font-size: clamp(1rem,1.8vw,1.25rem);
+  color: var(--muted); font-weight: 400; line-height: 1.6;
+  max-width: 560px; margin-bottom: 3rem;
+  opacity: 0; animation: fadeUp 0.8s 0.6s ease both;
+}
+.hero-meta {
+  display: flex; gap: 3rem; margin-bottom: 3rem;
+  opacity: 0; animation: fadeUp 0.8s 0.8s ease both;
+}
+.meta-item { display: flex; flex-direction: column; gap: 0.3rem; }
+.meta-value {
+  font-size: 2rem; font-weight: 800; line-height: 1;
+  background: linear-gradient(135deg, var(--text), var(--muted));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.meta-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted);
+}
+.hero-actions {
+  display: flex; gap: 1rem; align-items: center;
+  opacity: 0; animation: fadeUp 0.8s 1s ease both;
+}
+.btn-glow {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.9rem 2rem;
+  background: var(--accent); color: var(--bg);
+  text-decoration: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem; letter-spacing: 0.12em;
+  text-transform: uppercase; font-weight: 500;
+  border-radius: 2px;
+  box-shadow: 0 0 30px rgba(79,156,240,0.35);
+  transition: box-shadow 0.25s, transform 0.2s;
+}
+.btn-glow:hover { box-shadow: 0 0 50px rgba(79,156,240,0.5); transform: translateY(-2px); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.9rem 2rem;
+  background: transparent; color: var(--text);
+  text-decoration: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-bright); border-radius: 2px;
+  transition: border-color 0.25s, background 0.25s, transform 0.2s;
+}
+.btn-ghost:hover { border-color: var(--accent); background: rgba(79,156,240,0.06); transform: translateY(-2px); }
+.hero-cards {
+  position: absolute; right: 3rem; top: 50%;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 1rem;
+  opacity: 0; animation: fadeLeft 0.9s 0.9s ease both;
+}
+.float-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 1.2rem 1.5rem; min-width: 210px;
+  position: relative; overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.float-card:hover { border-color: var(--border-bright); transform: translateX(-4px); }
+.float-card::before { content:''; position:absolute; top:0;left:0;width:3px;height:100%; }
+.float-card.blue::before{background:var(--accent);}
+.float-card.purple::before{background:var(--accent2);}
+.float-card.green::before{background:var(--green);}
+.float-card.gold::before{background:var(--gold);}
+.card-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem;
+}
+.card-value { font-size: 1.05rem; font-weight: 700; color: var(--text); }
+.ticker {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 0.85rem 0; overflow: hidden;
+  position: relative; z-index: 1;
+}
+.ticker-track {
+  display: flex; animation: ticker 28s linear infinite; white-space: nowrap;
+}
+.ticker-item {
+  display: flex; align-items: center; gap: 2rem; padding: 0 2rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.63rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted); flex-shrink: 0;
+}
+.ticker-sep { color: var(--accent); font-size: 0.5rem; }
+.section { padding: 7rem 3rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+.section-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+}
+.section-title {
+  font-size: clamp(2rem,3.5vw,3rem); font-weight: 800;
+  line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 3.5rem;
+}
+.section-title .serif {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic; font-weight: 400; color: var(--muted);
+}
+.about-strip {
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  background: var(--surface); padding: 5rem 3rem;
+  position: relative; z-index: 1; overflow: hidden;
+}
+.about-strip::before {
+  content:'"';
+  position:absolute; font-family:'Instrument Serif',serif;
+  font-size:20rem; color:rgba(79,156,240,0.035);
+  top:-2rem; left:0.5rem; line-height:1; pointer-events:none;
+}
+.about-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 2fr; gap:5rem; align-items:center; }
+.about-left .about-tag { font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem; }
+.about-left h2 { font-size:2.5rem; font-weight:800; line-height:1.1; letter-spacing:-0.02em; }
+.about-left h2 span { font-family:'Instrument Serif',serif; font-style:italic; font-weight:400; color:var(--muted); }
+.about-right p { font-size:1rem; line-height:1.8; color:var(--muted); margin-bottom:1.2rem; }
+.about-right p strong { color:var(--text); font-weight:600; }
+.exp-grid { display:grid; gap:1px; background:var(--border); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+.exp-item {
+  background:var(--surface); padding:2.5rem 3rem;
+  display:grid; grid-template-columns:200px 1fr; gap:3rem; align-items:start;
+  transition:background 0.2s; position:relative;
+}
+.exp-item:hover { background:var(--surface2); }
+.exp-item::after { content:''; position:absolute; left:0;top:0;bottom:0; width:3px; background:transparent; transition:background 0.25s; }
+.exp-item:hover::after { background:var(--accent); }
+.exp-period { font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); margin-bottom:0.5rem; }
+.exp-company { font-size:0.85rem; color:var(--muted); font-weight:500; }
+.exp-company a { color:var(--muted); text-decoration:none; transition:color 0.2s; }
+.exp-company a:hover { color:var(--accent); }
+.exp-role { font-size:1.3rem; font-weight:700; margin-bottom:0.9rem; letter-spacing:-0.01em; }
+.exp-desc { font-size:0.87rem; line-height:1.75; color:var(--muted); max-width:580px; }
+.exp-tags { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1.2rem; }
+.exp-tag { font-family:'IBM Plex Mono',monospace; font-size:0.62rem; padding:0.3rem 0.7rem; background:rgba(79,156,240,0.08); border:1px solid rgba(79,156,240,0.2); border-radius:2px; color:var(--accent); letter-spacing:0.08em; }
+.expertise-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+.exp-card { background:var(--surface); padding:2.2rem; transition:background 0.2s; position:relative; overflow:hidden; }
+.exp-card:hover { background:var(--surface2); }
+.exp-card-glow { position:absolute; width:80px;height:80px; border-radius:50%; filter:blur(40px); opacity:0; transition:opacity 0.4s; top:-20px;right:-20px; }
+.exp-card:hover .exp-card-glow { opacity:0.4; }
+.exp-card.c1 .exp-card-glow{background:var(--accent);}
+.exp-card.c2 .exp-card-glow{background:var(--accent2);}
+.exp-card.c3 .exp-card-glow{background:var(--green);}
+.exp-card.c4 .exp-card-glow{background:var(--gold);}
+.exp-card.c5 .exp-card-glow{background:var(--accent);}
+.exp-card.c6 .exp-card-glow{background:var(--accent2);}
+.card-num { font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:var(--muted); letter-spacing:0.15em; margin-bottom:1.5rem; }
+.card-icon { font-size:1.5rem; margin-bottom:1rem; }
+.exp-card h3 { font-size:1.05rem; font-weight:700; margin-bottom:0.75rem; letter-spacing:-0.01em; }
+.exp-card p { font-size:0.82rem; line-height:1.7; color:var(--muted); }
+.skills-wrapper { display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; }
+.skill-col h4 { font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:1.2rem; padding-bottom:0.8rem; border-bottom:1px solid var(--border); }
+.skill-list { display:flex; flex-direction:column; gap:0.6rem; }
+.skill-item { display:flex; align-items:center; gap:0.6rem; font-size:0.82rem; color:var(--muted); transition:color 0.2s; cursor:default; }
+.skill-item:hover { color:var(--text); }
+.skill-item::before { content:''; width:4px;height:4px; border-radius:50%; background:var(--border-bright); flex-shrink:0; transition:background 0.2s; }
+.skill-item:hover::before { background:var(--accent); }
+.edu-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:2.5rem 3rem; display:flex; gap:3rem; align-items:center; transition:border-color 0.3s; }
+.edu-card:hover { border-color:var(--border-bright); }
+.edu-badge { width:80px;height:80px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1.3rem; color:white; flex-shrink:0; letter-spacing:-0.02em; }
+.edu-info h3 { font-size:1.3rem; font-weight:700; margin-bottom:0.4rem; }
+.edu-school { font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.1em; color:var(--accent); margin-bottom:0.6rem; }
+.edu-desc { font-size:0.85rem; color:var(--muted); line-height:1.65; max-width:550px; }
+.contact-section { background:var(--surface); border-top:1px solid var(--border); padding:7rem 3rem; text-align:center; position:relative; overflow:hidden; z-index:1; }
+.contact-glow { position:absolute; width:600px;height:400px; background:radial-gradient(ellipse, rgba(79,156,240,0.08) 0%, transparent 70%); top:50%;left:50%; transform:translate(-50%,-50%); pointer-events:none; }
+.contact-section h2 { font-size:clamp(2.5rem,5vw,4.5rem); font-weight:800; letter-spacing:-0.03em; line-height:1; margin-bottom:1.2rem; }
+.contact-section h2 .serif { font-family:'Instrument Serif',serif; font-style:italic; font-weight:400; color:var(--muted); }
+.contact-desc { font-size:1rem; color:var(--muted); max-width:420px; margin:0 auto 3rem; line-height:1.7; }
+.contact-links { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; position:relative; z-index:1; }
+footer { background:var(--bg); border-top:1px solid var(--border); padding:2rem 3rem; display:flex; justify-content:space-between; align-items:center; position:relative; z-index:1; }
+.footer-left { font-family:'IBM Plex Mono',monospace; font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); }
+.footer-right { font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:var(--muted); }
+.footer-right a { color:var(--accent); text-decoration:none; }
+.reveal { opacity:0; transform:translateY(28px); transition:opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity:1; transform:none; }
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+@keyframes fadeLeft{from{opacity:0;transform:translateX(30px);}to{opacity:1;transform:none;}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-100%);}to{opacity:1;transform:none;}}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+@media(max-width:1000px){
+  .hero-cards{display:none;}
+  .exp-item{grid-template-columns:1fr;gap:1rem;padding:2rem;}
+  .expertise-grid{grid-template-columns:1fr 1fr;}
+  .skills-wrapper{grid-template-columns:1fr 1fr;}
+  .about-inner{grid-template-columns:1fr;gap:2rem;}
+}
+@media(max-width:640px){
+  nav{padding:1.2rem 1.5rem;}
+  .nav-links{display:none;}
+  .hero{padding:7rem 1.5rem 4rem;}
+  .section{padding:5rem 1.5rem;}
+  .expertise-grid{grid-template-columns:1fr;}
+  .skills-wrapper{grid-template-columns:1fr;}
+  .edu-card{flex-direction:column;gap:1.5rem;}
+  .hero-meta{gap:1.5rem;flex-wrap:wrap;}
+  footer{flex-direction:column;gap:1rem;text-align:center;}
+}
 </style>
 </head>
 <body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-<!-- NAV -->
 <nav>
-  <div class="nav-logo">CSG &mdash; Data Science</div>
+  <div class="nav-logo">CSG.io</div>
   <ul class="nav-links">
-    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="#expertise">Expertise</a></li>
     <li><a href="#skills">Skills</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta">Connect</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-text">
-    <div class="hero-tag">Data Science Leader · Chicago, IL</div>
-    <h1>Chandra<br><em>Sekhar</em><br>Gidijala</h1>
-    <p class="hero-desc">Turning data into competitive advantage. 9+ years of expertise in building intelligent systems, predictive models, and decision engines for financial services.</p>
-    <div class="hero-cta">
-      <a href="#contact" class="btn-primary">Let's Connect →</a>
-      <a href="#experience" class="btn-outline">View My Work</a>
-    </div>
+<div style="position:relative;z-index:1;">
+<section class="hero" id="about">
+  <div class="hero-eyebrow">
+    <div class="eyebrow-dot"></div>
+    <div class="eyebrow-text">Open to New Opportunities · Chicago, IL</div>
   </div>
-  <div class="hero-visual">
-    <div class="avatar-ring">
-      <div class="avatar-inner">CSG</div>
-    </div>
-    <div class="hero-stats">
-      <div class="stat-card">
-        <div class="stat-number">9+</div>
-        <div class="stat-label">Years Experience</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">IIT</div>
-        <div class="stat-label">Kanpur Alumni</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">500+</div>
-        <div class="stat-label">Connections</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">FS</div>
-        <div class="stat-label">Fintech Domain</div>
-      </div>
-    </div>
+  <h1>Chandra<br><span class="serif">Sekhar</span><br>Gidijala</h1>
+  <p class="hero-sub">Senior Data Scientist turning consumer purchase signals and marketing data into strategic decisions. 10+ years across fintech, asset management, and consumer intelligence.</p>
+  <div class="hero-meta">
+    <div class="meta-item"><div class="meta-value">10+</div><div class="meta-label">Years Experience</div></div>
+    <div class="meta-item"><div class="meta-value">IIT</div><div class="meta-label">Kanpur Alumni</div></div>
+    <div class="meta-item"><div class="meta-value">$40B+</div><div class="meta-label">Fund Flow Models</div></div>
+    <div class="meta-item"><div class="meta-value">200K+</div><div class="meta-label">Clients Modeled</div></div>
+  </div>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-glow">Get in Touch →</a>
+    <a href="#experience" class="btn-ghost">View Experience</a>
+  </div>
+  <div class="hero-cards">
+    <div class="float-card blue"><div class="card-label">Current Role</div><div class="card-value">Senior Data Scientist II</div></div>
+    <div class="float-card purple"><div class="card-label">Current Company</div><div class="card-value">Affinity Solutions</div></div>
+    <div class="float-card green"><div class="card-label">Previously</div><div class="card-value">Discover · EXL</div></div>
+    <div class="float-card gold"><div class="card-label">Education</div><div class="card-value">IIT Kanpur (MS + BS)</div></div>
   </div>
 </section>
+</div>
 
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <span class="marquee-item">Machine Learning</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Predictive Analytics</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Financial Services</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Deep Learning</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Data Strategy</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Python · R · SQL</span><span class="marquee-dot"></span>
-    <span class="marquee-item">NLP</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Model Deployment</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Business Intelligence</span><span class="marquee-dot"></span>
-    <!-- duplicate for seamless loop -->
-    <span class="marquee-item">Machine Learning</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Predictive Analytics</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Financial Services</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Deep Learning</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Data Strategy</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Python · R · SQL</span><span class="marquee-dot"></span>
-    <span class="marquee-item">NLP</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Model Deployment</span><span class="marquee-dot"></span>
-    <span class="marquee-item">Business Intelligence</span><span class="marquee-dot"></span>
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Media Mix Modeling <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Multi-Touch Attribution <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Bayesian Modeling <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Recommender Systems <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Python · SQL · Spark <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Consumer Purchase Analytics <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Marketing Analytics <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Pricing Strategy <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Media Mix Modeling <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Multi-Touch Attribution <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Bayesian Modeling <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Recommender Systems <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Python · SQL · Spark <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Consumer Purchase Analytics <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Marketing Analytics <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Pricing Strategy <span class="ticker-sep">◆</span></span>
   </div>
 </div>
 
-<!-- EXPERTISE -->
-<section id="expertise" class="expertise">
-  <div style="max-width:1100px;margin:0 auto;">
-    <div class="reveal">
-      <div class="section-label">What I Do</div>
-      <div class="section-title">Areas of <em style="font-family:'Playfair Display',serif;font-style:italic;">Expertise</em></div>
+<div class="about-strip">
+  <div class="about-inner">
+    <div class="about-left reveal">
+      <div class="about-tag">About Me</div>
+      <h2>Passionate<br><span>Data Thinker</span></h2>
     </div>
-    <div class="expertise-grid reveal">
-      <div class="expertise-card">
-        <div class="expertise-icon">📊</div>
-        <h3>Predictive Modeling</h3>
-        <p>Designing and deploying end-to-end ML pipelines — from feature engineering to production-grade model serving — that directly drive business outcomes and profitability.</p>
-      </div>
-      <div class="expertise-card">
-        <div class="expertise-icon">💳</div>
-        <h3>Financial Analytics</h3>
-        <p>Deep expertise in credit risk, customer lifetime value, fraud detection, and portfolio analytics in the consumer finance space. Translating complexity into clarity.</p>
-      </div>
-      <div class="expertise-card">
-        <div class="expertise-icon">🧠</div>
-        <h3>Advanced AI & NLP</h3>
-        <p>Applying natural language processing, deep learning architectures, and generative AI techniques to solve real-world problems in regulated, data-rich environments.</p>
-      </div>
-      <div class="expertise-card">
-        <div class="expertise-icon">📈</div>
-        <h3>Data Strategy</h3>
-        <p>Bridging the gap between raw data and executive decision-making. Building the analytical infrastructure and governance frameworks that scale with the business.</p>
-      </div>
-      <div class="expertise-card">
-        <div class="expertise-icon">⚙️</div>
-        <h3>MLOps & Engineering</h3>
-        <p>Architecting robust model pipelines with monitoring, retraining triggers, and drift detection. Ensuring models stay reliable and valuable long after deployment.</p>
-      </div>
-      <div class="expertise-card">
-        <div class="expertise-icon">🎯</div>
-        <h3>Stakeholder Impact</h3>
-        <p>Communicating data insights to executive and cross-functional audiences. Converting analytical findings into compelling narratives that inspire confident action.</p>
-      </div>
+    <div class="about-right reveal">
+      <p>I'm a data science leader passionate about <strong>transforming complex data into actionable strategies</strong> that drive business growth and innovation. With a strong foundation in marketing analytics and financial services, I specialize in building advanced analytical frameworks that optimize decision-making and deliver measurable impact.</p>
+      <p>Currently at <strong>Affinity Solutions</strong> as Senior Data Scientist II, leveraging the most deterministic signal in marketing: real consumer purchase data. Previously at <strong>Discover Financial Services</strong> for 5 years as Principal Data Scientist — leading initiatives across media mix modeling, multi-touch attribution, and deposits pricing analytics. Before that, 5 years at <strong>EXL</strong> building data products for a top-10 global asset manager.</p>
+      <p>Dual-degree <strong>IIT Kanpur alumnus</strong> (MS + BS, Computer Science) who thrives at the intersection of rigorous quantitative thinking and clear business storytelling.</p>
     </div>
   </div>
-</section>
+</div>
 
-<!-- EXPERIENCE -->
-<section id="experience" style="max-width:900px;margin:0 auto;padding:6rem 4rem;">
+<div style="position:relative;z-index:1;">
+<section class="section" id="experience">
   <div class="reveal">
-    <div class="section-label">Career Journey</div>
-    <div class="section-title">Professional <em style="font-family:'Playfair Display',serif;font-style:italic;">Experience</em></div>
+    <div class="section-tag">Career</div>
+    <div class="section-title">Professional <span class="serif">Journey</span></div>
   </div>
-  <div class="timeline reveal">
-    <div class="timeline-item">
-      <div class="timeline-date">2016 – Present · Chicago, IL</div>
-      <div class="timeline-role">Data Science Professional</div>
-      <div class="timeline-company">Discover Financial Services</div>
-      <p class="timeline-desc">Leading advanced analytics initiatives across consumer credit products. Building ML models that inform credit decisions, improve customer retention, and detect fraud at scale. Driving measurable impact through data-driven product strategy and cross-functional collaboration.</p>
+  <div class="exp-grid reveal">
+
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-period">Jan 2026 – Present</div>
+        <div class="exp-company"><a href="https://www.affinity.solutions" target="_blank">Affinity Solutions ↗</a></div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">Senior Data Scientist II</div>
+        <p class="exp-desc">Working at the forefront of consumer purchase intelligence — leveraging deterministic purchase signals from millions of credit and debit cards to power experimentation, causal measurement, and AI-driven insights. Driving measurable client impact through advanced analytics and cross-functional collaboration with leadership and product teams.</p>
+        <div class="exp-tags">
+          <span class="exp-tag">Consumer Purchase Intelligence</span>
+          <span class="exp-tag">Causal Measurement</span>
+          <span class="exp-tag">Experimentation</span>
+          <span class="exp-tag">AI-Driven Insights</span>
+          <span class="exp-tag">Remote · Chicago</span>
+        </div>
+      </div>
     </div>
-    <div class="timeline-item">
-      <div class="timeline-date">Pre-2016</div>
-      <div class="timeline-role">Early Career in Data Science</div>
-      <div class="timeline-company">Data & Analytics Roles</div>
-      <p class="timeline-desc">Foundational years honing quantitative skills and statistical modeling, building expertise across the full data science lifecycle — from data wrangling and EDA to model development, validation, and deployment.</p>
+
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-period">2020 – 2025 · 5 yrs</div>
+        <div class="exp-company">Discover Financial Services</div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">Principal Data Scientist</div>
+        <p class="exp-desc">Led cross-functional data science initiatives across pricing, acquisition marketing, media attribution, and customer lifecycle. Built Bayesian Hierarchical Media Mix Models (MMM) to optimize media spend and identify top-performing channels by ROAS. Developed Multi-Touch Attribution (MTA) methodology stitching online and offline touchpoints across the full customer journey. Designed an automated competitor price tracking tool in Python, cutting 40 hours/month of manual effort and enabling real-time pricing agility. Delivered monthly strategic pricing recommendations to the executive Pricing Committee.</p>
+        <div class="exp-tags">
+          <span class="exp-tag">Media Mix Modeling</span>
+          <span class="exp-tag">Multi-Touch Attribution</span>
+          <span class="exp-tag">Bayesian Modeling</span>
+          <span class="exp-tag">Deposits Pricing</span>
+          <span class="exp-tag">Python · ML · Time Series</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-period">2015 – 2020 · 5 yrs</div>
+        <div class="exp-company">EXL · New York</div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">Senior Manager, Data Science</div>
+        <p class="exp-desc">Led data strategy and analytics for one of the world's top 10 asset managers by AUM. Directed buildout of scalable data products — growing the engagement from a pilot to a 5× team scale-up. Developed a $40B fund flow recapture system and a $1.87B revenue attribution pipeline. Designed a recommender engine for 200K+ institutional clients using collaborative filtering. Built entity resolution tools unifying 100+ client-level metrics into a centralized CRM dashboard. Also consulted on marketing analytics and sales strategy for the largest broadcasting and cable company (Fortune 50) in the world.</p>
+        <div class="exp-tags">
+          <span class="exp-tag">Recommender Systems</span>
+          <span class="exp-tag">Fund Flow Analytics</span>
+          <span class="exp-tag">Entity Resolution</span>
+          <span class="exp-tag">Spark · Python · SQL · SAS</span>
+          <span class="exp-tag">Asset Management</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-left">
+        <div class="exp-period">May – Jul 2013</div>
+        <div class="exp-company">Dolat Capital · Mumbai</div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">Quantitative Analyst Intern</div>
+        <p class="exp-desc">Built statistical financial models using time series forecasting in C/C++. Developed a C-Support Vector Machine (SVM) using Sequential Minimal Optimization (SMO). Implemented Auto-Regressive Moving Average (ARMA) models for real-time financial data analysis using Yule-Walker and Burg procedures with Final Prediction Error (FPE) optimization.</p>
+        <div class="exp-tags">
+          <span class="exp-tag">Time Series Forecasting</span>
+          <span class="exp-tag">SVM</span>
+          <span class="exp-tag">ARMA Models</span>
+          <span class="exp-tag">C / C++</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</div>
+
+<div style="position:relative;z-index:1;border-top:1px solid var(--border);">
+<section class="section" id="expertise">
+  <div class="reveal">
+    <div class="section-tag">What I Do</div>
+    <div class="section-title">Areas of <span class="serif">Expertise</span></div>
+  </div>
+  <div class="expertise-grid reveal">
+    <div class="exp-card c1"><div class="exp-card-glow"></div><div class="card-num">01</div><div class="card-icon">📡</div><h3>Media Mix Modeling</h3><p>Building Bayesian Hierarchical MMM models to quantify media spend impact on revenue. Generating optimized budget allocation scenarios and identifying top-performing channels by return on ad-spend.</p></div>
+    <div class="exp-card c2"><div class="exp-card-glow"></div><div class="card-num">02</div><div class="card-icon">🧭</div><h3>Multi-Touch Attribution</h3><p>Developing methodology to stitch online and offline touchpoints across the full customer journey — distributing credit across channels to reveal the true cost per customer acquisition.</p></div>
+    <div class="exp-card c3"><div class="exp-card-glow"></div><div class="card-num">03</div><div class="card-icon">🛒</div><h3>Consumer Purchase Intelligence</h3><p>Transforming real-time card transaction data into behavioral insights — identifying spending patterns, brand loyalty signals, and competitive dynamics to drive strategic decisions.</p></div>
+    <div class="exp-card c4"><div class="exp-card-glow"></div><div class="card-num">04</div><div class="card-icon">🤝</div><h3>Recommender Systems</h3><p>Designed collaborative filtering engines for 200K+ institutional clients, boosting campaign personalization at scale. Built behavioral purchase signal models that drive targeted engagement and revenue growth.</p></div>
+    <div class="exp-card c5"><div class="exp-card-glow"></div><div class="card-num">05</div><div class="card-icon">💰</div><h3>Pricing & Competitive Analytics</h3><p>Automated competitor price tracking with Python, reducing 40 hrs/month of manual effort. Delivered data-driven pricing recommendations to executive committees using macroeconomic indicators and product mix analysis.</p></div>
+    <div class="exp-card c6"><div class="exp-card-glow"></div><div class="card-num">06</div><div class="card-icon">💡</div><h3>Executive Storytelling</h3><p>Translating complex model outputs into compelling narratives for executive and cross-functional audiences. Bridging data science and business strategy to drive confident, informed decision-making at the leadership level.</p></div>
+  </div>
+</section>
+</div>
+
+<div style="position:relative;z-index:1;border-top:1px solid var(--border);">
+<section class="section" id="skills">
+  <div class="reveal">
+    <div class="section-tag">Technical Stack</div>
+    <div class="section-title">Tools & <span class="serif">Technologies</span></div>
+  </div>
+  <div class="skills-wrapper reveal">
+    <div class="skill-col">
+      <h4>Languages</h4>
+      <div class="skill-list">
+        <div class="skill-item">Python</div>
+        <div class="skill-item">SQL</div>
+        <div class="skill-item">R</div>
+        <div class="skill-item">SAS</div>
+        <div class="skill-item">C / C++</div>
+        <div class="skill-item">Scala / PySpark</div>
+      </div>
+    </div>
+    <div class="skill-col">
+      <h4>ML & Modeling</h4>
+      <div class="skill-list">
+        <div class="skill-item">Bayesian Hierarchical Models</div>
+        <div class="skill-item">Media Mix Modeling</div>
+        <div class="skill-item">Recommender Systems</div>
+        <div class="skill-item">Time Series Forecasting</div>
+        <div class="skill-item">XGBoost / LightGBM</div>
+        <div class="skill-item">Scikit-learn</div>
+      </div>
+    </div>
+    <div class="skill-col">
+      <h4>Data & Platforms</h4>
+      <div class="skill-list">
+        <div class="skill-item">Apache Spark / SparkML</div>
+        <div class="skill-item">Snowflake</div>
+        <div class="skill-item">Hadoop / Hive</div>
+        <div class="skill-item">AWS</div>
+        <div class="skill-item">Pandas / NumPy</div>
+        <div class="skill-item">dbt</div>
+      </div>
+    </div>
+    <div class="skill-col">
+      <h4>Domain Expertise</h4>
+      <div class="skill-list">
+        <div class="skill-item">Marketing Analytics</div>
+        <div class="skill-item">Multi-Touch Attribution</div>
+        <div class="skill-item">Pricing Strategy</div>
+        <div class="skill-item">Asset Management Analytics</div>
+        <div class="skill-item">Consumer Purchase Intelligence</div>
+        <div class="skill-item">Marketing Strategy</div>
+      </div>
     </div>
   </div>
 </section>
+</div>
 
-<!-- SKILLS -->
-<section id="skills" class="skills-section">
-  <div style="max-width:1100px;margin:0 auto;">
-    <div class="reveal">
-      <div class="section-label">Technical Stack</div>
-      <div class="section-title" style="color:var(--paper);">Tools &amp; <em style="font-family:'Playfair Display',serif;font-style:italic;">Technologies</em></div>
+<div style="position:relative;z-index:1;border-top:1px solid var(--border);">
+<section class="section">
+  <div class="reveal">
+    <div class="section-tag">Academic Foundation</div>
+    <div class="section-title">Education & <span class="serif">Background</span></div>
+  </div>
+  <div class="edu-card reveal" style="margin-bottom:1px;">
+    <div class="edu-badge">MS</div>
+    <div class="edu-info">
+      <h3>Master's Degree — Computer Science & Engineering</h3>
+      <div class="edu-school">Indian Institute of Technology, Kanpur</div>
+      <p class="edu-desc">Specialized in Cloud Computing, Software Engineering, and Mobile Computing at one of India's premier technical institutions. The rigorous curriculum sharpened the systems-level thinking and engineering discipline that underpins a decade of applied data science work.</p>
     </div>
-    <div class="skills-grid reveal">
-      <div class="skill-group">
-        <h4>Languages</h4>
-        <div class="skill-tags">
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">R</span>
-          <span class="skill-tag">SQL</span>
-          <span class="skill-tag">SAS</span>
-          <span class="skill-tag">Scala</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h4>ML / AI</h4>
-        <div class="skill-tags">
-          <span class="skill-tag">Scikit-learn</span>
-          <span class="skill-tag">TensorFlow</span>
-          <span class="skill-tag">XGBoost</span>
-          <span class="skill-tag">PyTorch</span>
-          <span class="skill-tag">NLP</span>
-          <span class="skill-tag">LLMs</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h4>Data & Cloud</h4>
-        <div class="skill-tags">
-          <span class="skill-tag">Spark</span>
-          <span class="skill-tag">AWS</span>
-          <span class="skill-tag">Hadoop</span>
-          <span class="skill-tag">Hive</span>
-          <span class="skill-tag">Snowflake</span>
-          <span class="skill-tag">Redshift</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h4>Visualization</h4>
-        <div class="skill-tags">
-          <span class="skill-tag">Tableau</span>
-          <span class="skill-tag">Power BI</span>
-          <span class="skill-tag">ggplot2</span>
-          <span class="skill-tag">Plotly</span>
-          <span class="skill-tag">Matplotlib</span>
-        </div>
-      </div>
+  </div>
+  <div class="edu-card reveal" style="margin-top:1rem;">
+    <div class="edu-badge" style="background:linear-gradient(135deg,var(--accent2),var(--green));">BS</div>
+    <div class="edu-info">
+      <h3>Bachelor's Degree — Computer Science & Engineering</h3>
+      <div class="edu-school">Indian Institute of Technology, Kanpur</div>
+      <p class="edu-desc">Active in the Entrepreneurship Cell, Photography Club, and Alumni Contact Program. Member of the Rubik's Cube Hobby Group. The IIT undergraduate experience fostered the analytical rigor and collaborative spirit that define Chandra's approach to every problem.</p>
     </div>
   </div>
 </section>
+</div>
 
-<!-- EDUCATION -->
-<section id="education" style="background:var(--paper);padding:6rem 4rem;">
-  <div style="max-width:900px;margin:0 auto;">
-    <div class="reveal">
-      <div class="section-label">Academic Foundation</div>
-      <div class="section-title">Education &amp; <em style="font-family:'Playfair Display',serif;font-style:italic;">Background</em></div>
-    </div>
-    <div class="education-card reveal">
-      <div class="edu-badge">IIT</div>
-      <div class="edu-details">
-        <h3>Indian Institute of Technology, Kanpur</h3>
-        <div class="institute">One of India's Premier Engineering Institutions</div>
-        <p>Rigorous quantitative and analytical training from one of the world's top technical universities. The IIT curriculum cultivates the engineering discipline and first-principles thinking that underpins a decade of applied data science work in industry.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact" class="contact-section">
-  <div class="section-label">Get In Touch</div>
-  <div class="section-title">Ready to <em style="font-family:'Playfair Display',serif;font-style:italic;">Collaborate?</em></div>
-  <p class="contact-tagline">Whether it's a challenging analytics problem, a potential opportunity, or just a conversation about data — I'd love to connect.</p>
+<div class="contact-section" id="contact">
+  <div class="contact-glow"></div>
+  <div class="section-tag" style="position:relative;z-index:1;">Let's Connect</div>
+  <h2 style="position:relative;z-index:1;">Open to <span class="serif">Opportunities</span><br>& Collaboration</h2>
+  <p class="contact-desc">Whether it's a challenging analytics problem, an exciting new role, or just a conversation about data science — I'd love to hear from you.</p>
   <div class="contact-links">
-    <a href="https://www.linkedin.com/in/csgidijala/" target="_blank" class="contact-link gold">
-      ↗ LinkedIn Profile
-    </a>
-    <a href="/cdn-cgi/l/email-protection#3e5d565f505a4c5f7e5b465f534e525b105d5153" class="contact-link">
-      ✉ Send Email
-    </a>
-    <a href="#" class="contact-link">
-      ↓ Download CV
-    </a>
+    <a href="https://www.linkedin.com/in/csgidijala/" target="_blank" class="btn-glow">↗ LinkedIn Profile</a>
+    <a href="/cdn-cgi/l/email-protection#b6d5ded7d8d2c4d7f6d3ced7dbc6dad398d5d9db" class="btn-ghost">✉ Email Me</a>
   </div>
-</section>
+</div>
 
 <footer>
-  &copy; 2026 Chandra Sekhar Gidijala &mdash; Data Science Professional &middot; Chicago, IL
+  <div class="footer-left">© 2026 Chandra Sekhar Gidijala · Chicago, IL</div>
+  <div class="footer-right">Data Science Leader · <a href="https://www.linkedin.com/in/csgidijala/" target="_blank">LinkedIn ↗</a></div>
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        e.target.style.transitionDelay = (Array.from(reveals).indexOf(e.target) % 3) * 0.1 + 's';
-        e.target.classList.add('v
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.classList.add('active');
+    ring.classList.add('active');
+  });
+
+  function animCursor() {
+    // Dot follows instantly
+    cursor.style.transform = `translate(calc(${mx}px - 50%), calc(${my}px - 50%))`;
+    // Ring follows with smooth lerp
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.transform = `translate(calc(${rx}px - 50%), calc(${ry}px - 50%))`;
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.classList.add('hovered'); ring.classList.add('hovered'); });
+    el.addEventListener('mouseleave', () => { cursor.classList.remove('hovered'); ring.classList.remove('hovered'); });
+  });
+  const reveals=document.querySelectorAll('.reveal');
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersectin
